@@ -151,6 +151,7 @@ function mfem_build()
          HYPRE_DIR="$HYPRE_DIR/src/hypre" \
          METIS_DIR="$METIS_DIR" \
          MFEM_USE_METIS_5="$METIS_5" \
+	 MFEM_USE_AMGX=YES \
          "${CUDA_MAKE_OPTS[@]}" \
          "${HIP_MAKE_OPTS[@]}" \
          "${OCCA_MAKE_OPTS[@]}" \
@@ -159,6 +160,7 @@ function mfem_build()
          "${LIBCEED_MAKE_OPTS[@]}" \
          "${SUNDIALS_MAKE_OPTS[@]}" \
          LDFLAGS="${LDFLAGS[*]}" \
+	 AMGX_DIR=/g/g16/oler1/MFEM_2/AMGX/ \
          MFEM_MPIEXEC="${MPIEXEC:-mpirun}" \
          MFEM_MPIEXEC_NP="${MPIEXEC_OPTS} ${MPIEXEC_NP:--np}" && \
       make info && \

@@ -92,10 +92,9 @@ function set_mpi_options()
       local partition="${partition:-pbatch}"
       # Time limit in minutes
       local TIME_LIMIT=${time_limit:-30}
-      local BSUB_OPTS="-I -q ${partition} -G ${account} -nnodes ${num_nodes}"
+      local BSUB_OPTS="-I"
       BSUB_OPTS="${BSUB_OPTS} -W ${TIME_LIMIT}"
-      MPIEXEC_OPTS="-N $num_nodes"
-      MPIEXEC_OPTS="${BSUB_OPTS} lrun ${MPIEXEC_OPTS}"
+      MPIEXEC_OPTS="${BSUB_OPTS} mpiexec ${MPIEXEC_OPTS}"
       MPIEXEC_POST_OPTS="${LRUN_GPU_OPT}"
       MPIEXEC="bsub"
       MPIEXEC_NP="-n"
@@ -119,9 +118,10 @@ function set_mpi_options()
       #    echo "   ($LSB_DJOB_NUMPROC - 1 < $num_proc_run)"
       #    exit 1
       # fi
-      MPIEXEC_OPTS="-N $num_nodes"
+      #MPIEXEC_OPTS="-N $num_nodes"
+      MPIEXEC_OPTS=""
       MPIEXEC_POST_OPTS="${LRUN_GPU_OPT}"
-      MPIEXEC="lrun"
+      MPIEXEC="mpiexec"
       MPIEXEC_NP="-n"
    fi
    compose_mpi_run_command
@@ -130,8 +130,8 @@ function set_mpi_options()
 
 valid_compilers="xlc gcc clang"
 num_proc_build=${num_proc_build:-16}
-num_proc_run=${num_proc_run:-4}
-num_proc_node=${num_proc_node:-4}
+num_proc_run=${num_proc_run:-32}
+num_proc_node=${num_proc_node:-32}
 memory_per_node=256
 
 # Optional (default): MPIEXEC (mpirun), MPIEXEC_OPTS (), MPIEXEC_NP (-np)
